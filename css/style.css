@@ -1,0 +1,18 @@
+body{background-color:black;color:white;}
+h1{font-family:'Caesar Dressing';font-size:50px}
+hr{border:2px blue solid;}
+img{border-radius: 500px;background-color:white;width:150px;border:white 5px solid;}
+
+
+.container {position: relative;width: 100%;max-width: 400px;}
+.image {display: block;}
+.overlay {position: absolute;top: 0;bottom: 0;left: 0;right: 0;opacity: 0;transition: .3s ease;}
+.overlay img{width:300px;}
+.container:hover .overlay {opacity: 1;}
+.profPic {background-color:black;width:300px;}
+
+
+@media screen and (max-width: 800px){
+img{width:120px;}
+.container{clear:both}
+}
