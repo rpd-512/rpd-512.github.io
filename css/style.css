@@ -1,9 +1,11 @@
 body{background-color:black;color:white;}
 h1{font-family:Artifika;font-size:50px}
-hr{border:2px blue solid;}
+hr{border:2px navy solid;}
 img{border-radius: 500px;background-color:white;width:180px;border:white 5px solid;}
 .abt{font-family:'Averia Gruesa Libre';font-size:20px;}
 .abt img{border:1px white solid;vertical-align:middle;width:40px;}
+.lftLnk{float:left;}
+.rgtLnk{float:right;}
 
 .container {position: relative;width: 100%;max-width: 400px;}
 .container p{font-family:bangers;font-size:25px;}
@@ -15,6 +17,8 @@ img{border-radius: 500px;background-color:white;width:180px;border:white 5px sol
 
 
 @media screen and (max-width: 800px){
-img{width:120px;}
+img{width:100px;}
 .container{clear:both}
+.lftLnk{margin-left:5%;}
+.rgtLnk{margin-right:5%;}
 }
