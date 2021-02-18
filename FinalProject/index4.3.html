@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project004 || Basic Homepage</title>
+        <style>
+            .topMenu{background:black; height:50px;padding:10px;}
+            .topMenu *{color:white;}
+            .topMenu .siten{font-size:40px;font-family:monospace;text-decoration: none;transition:0.3s ease;float: left;}
+            .topMenu .siten:hover{color:pink;}
+            .topMenu .drop{float:right;font-size:30px;background-color:transparent;border-color: transparent;outline: none;}
+            .topMenu .drop button{background-color:rgba(50,51,52,0.75);display: none;width:175px; font-size: 40px;border-color: transparent;outline:none;}
+            .topMenu .drop button:hover{background-color:rgba(0,51,52,.9);}
+            .topMenu .drop span{font-weight:bold;float:right}
+            .topMenu .drop:hover button{display: inline;}
+
+            .bodyMain{text-align:center;color: white;background-color:rgba(50,51,52,0.75); width:50%;margin-top: 50px;min-height:300px;padding:10px;border-radius:50px;font-size:25px;font-family: monospace;}
+            .bodyMain a{color:seashell}
+
+            .bodyMain input,textarea{width:25%;font-size: 20px;padding: 5px 15px;outline: none;background-color:rgba(50,51,52,0.5);border:2px white solid;color:white;transition: 0.3s ease-in-out;border-radius: 5px;}
+            .bodyMain input:focus,textarea:focus{width: 50%;}
+            .bodyMain input[type=submit]{width:25%;}
+            .bodyMain input[type=submit]:hover{color:black;background-color:white}
+
+            .contSym img{width:75px}
+        </style>
+    </head>
+    <body style="background-image: url('images/background_002.jpg');background-repeat: no-repeat;  background-attachment: fixed;background-size: cover;">
+        <div class="topMenu">
+            <a href="index4.1.html" class="siten">ExampleSite.com</a>
+            <div class="drop">
+                <span>&#xFE19;</span><br>
+                <button onclick="location.href = 'index4.1.html'">Home</button><br>
+                <button onclick="location.href = 'index4.2.html'">About</button><br>
+                <button onclick="location.href = 'index4.3.html'">Contact</button>
+            </div>
+        </div>
+        <center>
+        <div class="bodyMain">
+            Contact<br><br>
+            <span style="font-size:20px">
+                Contact us today for more details on our site<br><br>
+                <form>
+                    <input placeholder="Name"><br><br>
+                    <input placeholder="Email Id" type="email"><br><br>
+                    <textarea placeholder="Your Message"></textarea><br><br>
+                    <input type="submit" value="Send">
+                </form>
+            </span>
+        </div><br>
+        <div class="contSym">
+            <a href="mailto:examplemail@gmail.com"><img src="https://rpd-512.github.io/images/em.png"></a>
+            <a href="https://api.whatsapp.com/send/?phone=1234567890"><img src="https://i.pinimg.com/originals/79/dc/31/79dc31280371b8ffbe56ec656418e122.png"></a>
+        </div>
+        </center>
+    </body>
+</html>

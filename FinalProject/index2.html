@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project002 || Basics of CSS</title>
+        <link rel="stylesheet" href="style.css"/>
+        <style>
+            p{font-size:20px}
+            #hover:hover{background:lime;color:black}
+            #active:active{background:cyan;color:blue;}
+        </style>
+    </head>
+    <body style="background-image: linear-gradient(indigo,purple,black);background-repeat: no-repeat;  background-attachment: fixed;background-size: cover;">
+        <div class="proj002">
+            <center>
+                <h1>Basics of CSS</h1>
+                <p>CSS is the language we use to style an HTML document.<br>
+                    CSS describes how HTML elements should be displayed.
+                </p>
+                <div class="proj002">
+                    <table>
+                        <tr>
+                            <td>color</td>
+                            <td>To change <span style="color:cyan">font</span> <span style="color:pink">color</span></td>
+                        </tr>
+                        <tr>
+                            <td>font-size</td>
+                            <td>To change the <span style="font-size: 35px;">font</span> <span style="font-size:15px">size</span></td>
+                        </tr>
+                        <tr>
+                            <td>background-color</td>
+                            <td>To change the <span style="background-color: blue;"> background </span><span style="background-color: green;"> color </span></td>
+                        </tr>
+                        <tr>
+                            <td>border</td>
+                            <td>To give <span style="border:5px lime solid">borders</span> to an element</td>
+                        </tr>
+                        <tr>
+                            <td>border-radius</td>
+                            <td>To give <span style="border:5px cyan solid;border-radius: 50px;">curves</span> to a border</td>
+                        </tr>
+                    </table>
+                    <h1>CSS selectors</h1>
+                    <table>
+                        <tr>
+                            <td id="hover">hover</td>
+                            <td>Some changes will appear if mouse is hovered</td>
+                        </tr>
+                        <tr>
+                            <td id="active">active</td>
+                            <td>Some changes will appear if the element is clicked once</td>
+                        </tr>
+                    </table>
+                </div>
+            </center>
+        </div>
+    </body>
+</html>

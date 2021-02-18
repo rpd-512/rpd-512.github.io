@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project006 || SignUp Form</title>
+        <link rel="stylesheet" href="style.css"/>
+        <style>
+            body{background-image: url('images/background_001.jpg');background-repeat: no-repeat;  background-attachment: fixed;background-size: cover;}
+            h1{font-family: Courier;color:white;}
+            table{border:5px white solid;border-radius: 15px;padding:50px;margin-top: 5%;font-size:25px;color:white;background:rgba(50,51,52,0.75)}
+            input{font-size:25px;background-color:rgba(50,51,52,0.5);border:2px white solid;border-radius:10px;color:white;outline:none;padding:5px 10px;transition:0.5s ease;}
+            input:focus{border-color:yellow}
+            span{font-family: Arial;}
+            button{font-size:25px;margin-top:5px;border-radius:15px;background:rgba(50,51,52,0.75);color:white;padding:5px 25px;border:white 3px solid;outline:none;transition:0.3s ease}
+            button:hover{background:black}
+        </style>
+    </head>
+    <body bgcolor="white">
+        <center>
+        <h1>Please Sign Up</h1>
+        <table>
+            <form id="myform">
+                <tr><td><span>Name</span></td>
+                    <td><input value=""></td></tr>
+                <tr><td><span>Email</span></td>
+                    <td><input value=""></td></tr>
+                <tr><td><span>Gender</span></td>
+                    <td><label for="male">Male</label>
+                    <input type="radio" value="m" id="male"  name="gen">
+                    <label for="female">Female</label>
+                    <input type="radio" value="f" id="female"  name="gen">
+                    <label for="others">Other</label>
+                    <input type="radio" value="o" id="other" name="gen"></td></tr>
+                <tr><td><span>D.O.B.</span></td>
+                    <td><input type="date" value=""></td></tr>
+                <tr><td><span>Password</span></td>
+                    <td><input type="password" value=""></td></tr>
+                <tr><td><span>Confirm Password</span></td>
+                    <td><input type="password" value=""></td></tr>
+            </form>
+        </table><button form="myform">SignUp</button>
+        </center>
+    </body>
+</html>

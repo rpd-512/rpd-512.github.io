@@ -1,0 +1,10 @@
+.proj001{color:white}
+.proj001 *{font-family: courier;}
+.proj001 .maintext{text-align:left;width:75%;background-color:rgba(50,51,52,0.75);min-height:500px;border-radius:50px;padding:25px;font-weight: bold;font-size:25px}
+.proj001 .maintext i{color:yellow;}
+.proj001 .maintext dt{color:wheat;font-weight:bold;font-size: 50px;}
+
+.proj002{color:white}
+.proj002 *{font-family: courier;}
+.proj002 td{border:white 3px solid;font-size: 25px;font-weight:bold;padding:5px;border-radius: 10px;}
+.proj002 table{background:rgba(150,51,252,0.25);border:white 2px solid;padding:20px;border-radius: 50px;}

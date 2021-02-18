@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project004 || Basic Homepage</title>
+        <style>
+            .topMenu{background:black; height:50px;padding:10px;}
+            .topMenu *{color:white;}
+            .topMenu .siten{font-size:40px;font-family:monospace;text-decoration: none;transition:0.3s ease;float: left;outline: none;}
+            .topMenu .siten:hover{color:pink;}
+            .topMenu .drop{float:right;font-size:30px;background-color:transparent;border-color: transparent;outline: none;}
+            .topMenu .drop button{background-color:rgba(50,51,52,0.75);display: none;width:175px; font-size: 40px;border-color: transparent;outline:none;}
+            .topMenu .drop button:hover{background-color:rgba(0,51,52,.9);}
+            .topMenu .drop span{font-weight:bold;float:right}
+            .topMenu .drop:hover button{display: inline;}
+            
+            .bodyMain{text-align:center;color: white;background-color:rgba(50,51,52,0.75); width:50%;margin-top: 50px;min-height:400px;padding:10px;border-radius:50px;font-size:25px;font-family: monospace;}
+        </style>
+    </head>
+    <body style="background-image: url('images/background_002.jpg');background-repeat: no-repeat;  background-attachment: fixed;background-size: cover;">
+        <div class="topMenu">
+            <a href="index4.1.html" class="siten">ExampleSite.com</a>
+            <div class="drop">
+                <span>&#xFE19;</span><br>
+                <button onclick="location.href = 'index4.1.html'">Home</button><br>
+                <button onclick="location.href = 'index4.2.html'">About</button><br>
+                <button onclick="location.href = 'index4.3.html'">Contact</button>
+            </div>
+        </div>
+        <center>
+        <div class="bodyMain">
+            Welcome to ExampleSite.com<br><br>
+            <span style="font-size:50px">
+            We are here to provide you with example things
+            </span>
+        </div>
+        </center>
+    </body>
+</html>
