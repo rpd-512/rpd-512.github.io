@@ -1,0 +1,18 @@
+body{background:linear-gradient(rgb(10,10,35),black);background-repeat: no-repeat;background-attachment: fixed;text-align:center;color:white;}
+img.prof{width:150px;border-radius:500px;border:2px solid white;}
+span.prof{font-size:20px;font-family:'Autour One';display:block;}
+span.header{font-size:50px;font-family:Acme;display:block;}
+.proj{margin-bottom:50px;margin-top:10px;background:rgba(50,51,52,0.2);padding:50px;}
+.proj span{font-size:20px;font-family:Acme; display:block;}
+.proj span.titl{font-size:25px;}
+.proj a{font-family:acme;color:white;font-size:25px;}
+.proj img{background:white;width:100px;border-radius:500px;border:5px white solid;vertical-align:middle;padding:1px;margin-bottom:50px;}
+.cont{height:100px;margin-top:50px;margin-bottom:50px;margin-top:50px;background:rgba(50,51,52,0.2);padding:50px;text-align:center;}
+.cont div{margin:auto;max-width:380px;text-align:center;}
+.cont a{float:left;padding:15px;}
+.cont a img{width:50px;vertical-align:middle;border-radius:500px;background:white;border:2px solid white;}
+.cont a span{font-family:acme;color:white;font-size:25px; display:block;text-decoration: underline;}
+@media screen and (max-width: 800px){
+.cont a img{width:30px;}
+.cont a span{font-size:17px;}
+}
