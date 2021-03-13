@@ -7,7 +7,7 @@ barSeed = genRand();
 bdPos = 50;
 var acc = 1;
 gArea.setAttribute("width", wd - 20)
-gArea.setAttribute("height", ht - 20)
+gArea.setAttribute("height", ht)
 var barD = wd;
 var p = 0;
 var ga = document.getElementById("gArea").getContext("2d");
