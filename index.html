@@ -1,749 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rhiddhi Prasad Das</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-  <style>
-    /* ── RESET & VARIABLES ─────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Rhiddhi Prasad Das — Researcher & Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#060810;--bg2:#0c0f1a;--surface:#0f1420;--surface2:#151c2e;
+  --border:#1a2235;--border2:#243050;
+  --green:#0ff0a0;--green-dim:rgba(15,240,160,0.1);
+  --blue:#4f8cff;--blue-dim:rgba(79,140,255,0.1);
+  --orange:#ff8c42;--purple:#9b6dff;--red:#ff4f6e;
+  --text:#b8c5d8;--text-hi:#e8f0fd;--muted:#4a5878;
+  --sans:'Space Grotesk',sans-serif;--mono:'Fira Code',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;line-height:1.6}
+a{text-decoration:none;color:inherit}
+::selection{background:rgba(15,240,160,.2);color:var(--text-hi)}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
 
-    :root {
-      --bg:        #0a0c0f;
-      --surface:   #111418;
-      --border:    #1e2530;
-      --accent:    #00e5a0;
-      --accent2:   #3d6fff;
-      --muted:     #4a5568;
-      --text:      #c8d0dc;
-      --text-hi:   #edf2f7;
-      --mono:      'IBM Plex Mono', monospace;
-      --display:   'Syne', sans-serif;
-      --radius:    4px;
-      --gap:       2rem;
-    }
+/* BG CANVAS */
+#bg-canvas{position:fixed;inset:0;z-index:0;opacity:.5}
 
-    html { scroll-behavior: smooth; }
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 3rem;
+  background:rgba(6,8,16,.75);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--mono);font-size:.85rem;color:var(--green);letter-spacing:.04em}
+.nav-logo span{color:var(--text-hi)}
+.nav-links{display:flex;gap:2rem}
+.nav-links a{font-size:.75rem;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--green)}
+.nav-cta{font-family:var(--mono);font-size:.72rem;padding:.35rem .9rem;border:1px solid var(--green);color:var(--green);border-radius:3px;transition:background .2s,color .2s}
+.nav-cta:hover{background:var(--green);color:var(--bg)}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 14px;
-      line-height: 1.7;
-      overflow-x: hidden;
-    }
+/* LAYOUT */
+.content{position:relative;z-index:1}
+section{padding:6rem 10vw}
 
-    /* ── NOISE OVERLAY ─────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 9999;
-    }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
 
-    /* ── LAYOUT ────────────────────────────────────────────── */
-    .site-wrapper {
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: 100vh;
-    }
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;align-items:center;gap:4rem;padding-top:7rem}
+.hero-left{flex:1;min-width:0}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:var(--mono);font-size:.68rem;padding:.3rem .8rem;
+  border:1px solid var(--border2);border-radius:2px;color:var(--muted);
+  margin-bottom:1.5rem;letter-spacing:.08em;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pdot 2s infinite}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(15,240,160,.4)}50%{box-shadow:0 0 0 6px rgba(15,240,160,0)}}
+h1.hero-name{font-size:clamp(2.8rem,6vw,5.2rem);font-weight:700;line-height:1.02;color:var(--text-hi);letter-spacing:-.03em;margin-bottom:.9rem}
+h1.hero-name em{font-style:normal;background:linear-gradient(135deg,var(--green),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{font-family:var(--mono);font-size:.9rem;color:var(--muted);margin-bottom:1.4rem;display:flex;align-items:center;gap:.4rem}
+.hero-role::before{content:'// ';color:var(--green)}
+.hero-desc{font-size:.95rem;color:var(--text);max-width:500px;line-height:1.8;margin-bottom:2.5rem}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:.62rem 1.35rem;border-radius:3px;font-size:.8rem;font-family:var(--mono);cursor:pointer;border:none;transition:transform .15s,box-shadow .15s;letter-spacing:.04em;display:inline-block}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--green);color:var(--bg);font-weight:600;box-shadow:0 0 24px rgba(15,240,160,.25)}
+.btn-primary:hover{box-shadow:0 0 36px rgba(15,240,160,.5)}
+.btn-ghost{background:transparent;color:var(--text-hi);border:1px solid var(--border2)}
+.btn-ghost:hover{border-color:var(--green);color:var(--green)}
+.hero-stats{display:flex;gap:2.5rem;margin-top:3rem;border-top:1px solid var(--border);padding-top:2rem;flex-wrap:wrap}
+.h-stat .num{font-size:2rem;font-weight:700;color:var(--text-hi);line-height:1;display:block}
+.h-stat .lbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin-top:.2rem;display:block}
+.hero-right{flex:0 0 360px;height:360px}
+#hero-canvas{width:100%;height:100%;border:1px solid var(--border);border-radius:6px;background:var(--surface)}
 
-    /* ── SIDEBAR ───────────────────────────────────────────── */
-    .sidebar {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid var(--border);
-      padding: 2.5rem 1.75rem;
-      background: var(--surface);
-      overflow-y: auto;
-    }
+/* ── SECTION HEADERS ── */
+.sec-eyebrow{font-family:var(--mono);font-size:.68rem;color:var(--green);letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem;display:flex;align-items:center;gap:.8rem}
+.sec-eyebrow::after{content:'';flex:0 0 36px;height:1px;background:var(--green)}
+.sec-title{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:700;color:var(--text-hi);letter-spacing:-.02em;margin-bottom:.8rem}
+.sec-sub{font-size:.9rem;color:var(--muted);max-width:500px;margin-bottom:3rem}
 
-    .sidebar-logo {
-      font-family: var(--display);
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--text-hi);
-      letter-spacing: -0.02em;
-      margin-bottom: 0.25rem;
-    }
+/* ── PROJECTS ── */
+#projects{background:var(--bg2)}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:1.5rem}
+.proj-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .25s,transform .25s,box-shadow .25s}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.proj-viz{height:190px;position:relative;overflow:hidden;background:var(--bg);flex-shrink:0}
+.proj-viz canvas{display:block;width:100%;height:100%}
+.proj-body{padding:1.3rem 1.4rem}
+.proj-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:.5rem}
+.proj-name{font-size:1rem;font-weight:600;color:var(--text-hi);display:flex;align-items:center;gap:.45rem}
+.proj-link{font-family:var(--mono);font-size:.62rem;padding:.18rem .48rem;border:1px solid var(--border2);border-radius:2px;color:var(--muted);transition:color .15s,border-color .15s}
+.proj-link:hover{color:var(--green);border-color:var(--green)}
+.proj-desc{font-size:.79rem;color:var(--text);line-height:1.7;margin-bottom:.9rem}
+.proj-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+.ptag{font-family:var(--mono);font-size:.6rem;padding:.16rem .4rem;border-radius:2px}
+.tg{background:var(--green-dim);color:var(--green)}
+.tb{background:var(--blue-dim);color:var(--blue)}
+.to{background:rgba(255,140,66,.1);color:var(--orange)}
+.tp{background:rgba(155,109,255,.1);color:var(--purple)}
+.tr{background:rgba(255,79,110,.1);color:var(--red)}
 
-    .sidebar-tagline {
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 2.5rem;
-    }
+/* ── PUBLICATIONS ── */
+.pubs-list{display:flex;flex-direction:column;gap:.9rem}
+.pub-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:1.2rem 1.4rem;display:grid;grid-template-columns:auto 1fr;gap:.9rem;align-items:start;transition:border-color .2s,transform .2s;position:relative;overflow:hidden}
+.pub-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--green),var(--blue));transform:scaleY(0);transform-origin:bottom;transition:transform .25s}
+.pub-card:hover::before{transform:scaleY(1)}
+.pub-card:hover{border-color:var(--border2);transform:translateX(4px)}
+.pub-year{font-family:var(--mono);font-size:.68rem;color:var(--green);writing-mode:vertical-rl;text-align:center;letter-spacing:.1em;padding:.1rem}
+.pub-title{font-size:.87rem;font-weight:600;color:var(--text-hi);margin-bottom:.25rem;line-height:1.4}
+.pub-authors{font-family:var(--mono);font-size:.65rem;color:var(--blue);margin-bottom:.4rem}
+.pub-abstract{font-size:.74rem;color:var(--text);line-height:1.65;margin-bottom:.6rem}
+.pub-footer{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.pub-venue{font-family:var(--mono);font-size:.6rem;padding:.16rem .4rem;border-radius:2px;border:1px solid rgba(15,240,160,.35);color:var(--green)}
 
-    .nav-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.6rem;
-    }
+/* ── SKILLS ── */
+#skills{background:var(--bg2)}
+.skills-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.skill-col-title{font-family:var(--mono);font-size:.68rem;color:var(--green);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.4rem}
+.skill-bar{margin-bottom:1.1rem}
+.skill-bar-header{display:flex;justify-content:space-between;margin-bottom:.35rem}
+.skill-bar-name{font-size:.8rem;color:var(--text-hi)}
+.skill-bar-pct{font-family:var(--mono);font-size:.68rem;color:var(--green)}
+.skill-bar-track{height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.skill-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--blue));width:0;transition:width 1.3s cubic-bezier(.22,1,.36,1)}
+.tech-cloud{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem}
+.tech-chip{font-family:var(--mono);font-size:.63rem;padding:.22rem .55rem;border-radius:2px;border:1px solid var(--border2);color:var(--muted);transition:color .15s,border-color .15s,background .15s}
+.tech-chip:hover{color:var(--text-hi);border-color:var(--green);background:var(--green-dim)}
 
-    nav ul { list-style: none; margin-bottom: 2rem; }
-    nav ul li { margin-bottom: 0.1rem; }
-    nav ul li a {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 0.6rem;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.78rem;
-      border-radius: var(--radius);
-      transition: background 0.15s, color 0.15s;
-    }
-    nav ul li a:hover, nav ul li a.active {
-      background: rgba(0,229,160,0.08);
-      color: var(--accent);
-    }
-    nav ul li a .nav-icon {
-      width: 14px; text-align: center; opacity: 0.6;
-    }
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-left:1.8rem}
+.timeline::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-item{position:relative;margin-bottom:2.2rem}
+.tl-dot{position:absolute;left:-1.8rem;top:.3rem;width:13px;height:13px;border-radius:50%;border:2px solid var(--green);background:var(--bg);box-shadow:0 0 10px rgba(15,240,160,.3)}
+.tl-date{font-family:var(--mono);font-size:.66rem;color:var(--green);margin-bottom:.25rem;letter-spacing:.05em}
+.tl-title{font-size:.95rem;font-weight:600;color:var(--text-hi);margin-bottom:.15rem}
+.tl-org{font-size:.78rem;color:var(--blue);margin-bottom:.4rem}
+.tl-desc{font-size:.8rem;color:var(--text);line-height:1.7}
 
-    .sidebar-links {
-      margin-top: auto;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .sidebar-links a {
-      font-size: 0.68rem;
-      color: var(--muted);
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: color 0.15s, border-color 0.15s;
-    }
-    .sidebar-links a:hover { color: var(--accent); border-color: var(--accent); }
+/* ── CONTACT ── */
+#contact{background:var(--bg);text-align:center;border-top:1px solid var(--border)}
+.contact-title{font-size:clamp(1.5rem,3vw,2.3rem);font-weight:700;color:var(--text-hi);margin-bottom:.7rem}
+.contact-sub{font-size:.9rem;color:var(--muted);max-width:420px;margin:0 auto 2.2rem}
+.contact-links{display:flex;justify-content:center;gap:.9rem;flex-wrap:wrap}
+.c-link{display:flex;align-items:center;gap:.45rem;padding:.5rem 1.1rem;border:1px solid var(--border2);border-radius:3px;font-family:var(--mono);font-size:.72rem;color:var(--text);transition:border-color .2s,color .2s,background .2s}
+.c-link:hover{border-color:var(--green);color:var(--green);background:var(--green-dim)}
+footer{text-align:center;padding:1.4rem;font-family:var(--mono);font-size:.62rem;color:var(--muted);border-top:1px solid var(--border)}
 
-    /* ── MAIN CONTENT ──────────────────────────────────────── */
-    main {
-      padding: 3rem 3.5rem;
-      max-width: 860px;
-    }
-
-    /* ── SECTIONS ──────────────────────────────────────────── */
-    section {
-      margin-bottom: 5rem;
-      opacity: 0;
-      transform: translateY(18px);
-      animation: fadeUp 0.5s ease forwards;
-    }
-    section:nth-child(1) { animation-delay: 0.05s; }
-    section:nth-child(2) { animation-delay: 0.1s; }
-    section:nth-child(3) { animation-delay: 0.15s; }
-    section:nth-child(4) { animation-delay: 0.2s; }
-    section:nth-child(5) { animation-delay: 0.25s; }
-    section:nth-child(6) { animation-delay: 0.3s; }
-
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-    .section-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-    .section-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    /* ── HERO ──────────────────────────────────────────────── */
-    #about .hero-name {
-      font-family: var(--display);
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800;
-      line-height: 1.05;
-      color: var(--text-hi);
-      letter-spacing: -0.03em;
-      margin-bottom: 1rem;
-    }
-    #about .hero-name span { color: var(--accent); }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.5rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
-    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
-
-    .hero-bio {
-      font-size: 0.88rem;
-      color: var(--text);
-      line-height: 1.85;
-      max-width: 600px;
-      border-left: 2px solid var(--accent);
-      padding-left: 1rem;
-    }
-
-    /* ── STAT PILLS ────────────────────────────────────────── */
-    .stats-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-top: 2rem;
-    }
-    .stat-pill {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 0.6rem 1rem;
-      text-align: center;
-      min-width: 90px;
-    }
-    .stat-pill .num {
-      font-family: var(--display);
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--accent);
-      display: block;
-    }
-    .stat-pill .lbl {
-      font-size: 0.6rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    /* ── CARDS ─────────────────────────────────────────────── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 1rem;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .card:hover { border-color: #2a3545; transform: translateX(3px); }
-    .card:hover::before { opacity: 1; }
-
-    .card-title {
-      font-family: var(--display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-hi);
-      margin-bottom: 0.3rem;
-      line-height: 1.3;
-    }
-    .card-meta {
-      font-size: 0.68rem;
-      color: var(--accent2);
-      margin-bottom: 0.6rem;
-      letter-spacing: 0.04em;
-    }
-    .card-desc {
-      font-size: 0.78rem;
-      color: var(--text);
-      line-height: 1.7;
-    }
-    .card-footer {
-      margin-top: 0.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      align-items: center;
-    }
-
-    /* ── TAGS ──────────────────────────────────────────────── */
-    .tag {
-      font-size: 0.62rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 2px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .tag-green  { background: rgba(0,229,160,0.1); color: var(--accent); }
-    .tag-blue   { background: rgba(61,111,255,0.12); color: #7b9cff; }
-    .tag-gray   { background: rgba(74,85,104,0.25); color: var(--muted); }
-
-    /* ── BADGES / VENUE ────────────────────────────────────── */
-    .venue-badge {
-      font-size: 0.62rem;
-      padding: 0.18rem 0.45rem;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      color: var(--muted);
-    }
-    .venue-badge.published { border-color: rgba(0,229,160,0.4); color: var(--accent); }
-
-    /* ── LINKS ─────────────────────────────────────────────── */
-    .link-sm {
-      font-size: 0.68rem;
-      color: var(--accent2);
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.15s;
-    }
-    .link-sm:hover { opacity: 1; text-decoration: underline; }
-
-    /* ── EXPERIENCE ────────────────────────────────────────── */
-    .exp-card {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.5rem;
-    }
-    .exp-date {
-      font-size: 0.68rem;
-      color: var(--muted);
-      white-space: nowrap;
-      padding-top: 0.2rem;
-    }
-
-    /* ── SKILLS GRID ───────────────────────────────────────── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-    .skill-group {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem;
-    }
-    .skill-group-title {
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-    }
-    .skill-list {
-      font-size: 0.74rem;
-      color: var(--text);
-      line-height: 1.9;
-    }
-
-    /* ── CERT LIST ─────────────────────────────────────────── */
-    .cert-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid var(--border);
-      gap: 1rem;
-    }
-    .cert-item:last-child { border-bottom: none; }
-    .cert-name { font-size: 0.78rem; color: var(--text); }
-    .cert-issuer { font-size: 0.65rem; color: var(--muted); margin-top: 0.1rem; }
-    .cert-date { font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
-
-    /* ── EDUCATION ─────────────────────────────────────────── */
-    .edu-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.5rem;
-    }
-    .edu-degree {
-      font-family: var(--display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text-hi);
-    }
-    .edu-school { color: var(--accent); font-size: 0.78rem; margin: 0.25rem 0; }
-    .edu-detail { font-size: 0.74rem; color: var(--text); margin-top: 0.5rem; line-height: 1.8; }
-
-    /* ── SCROLLBAR ─────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-    /* ── RESPONSIVE ────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .site-wrapper { grid-template-columns: 1fr; }
-      .sidebar { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
-      main { padding: 2rem 1.25rem; }
-      #about .hero-name { font-size: 2.2rem; }
-    }
-  </style>
+@media(max-width:900px){
+  #hero{flex-direction:column;padding:5rem 6vw 3rem;gap:2rem}
+  .hero-right{flex:none;width:100%;height:240px}
+  .proj-grid{grid-template-columns:1fr}
+  .skills-wrapper{grid-template-columns:1fr}
+  nav{padding:.8rem 1.4rem}.nav-links{display:none}
+  section{padding:4rem 6vw}
+}
+</style>
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
 
-<div class="site-wrapper">
+<nav>
+  <div class="nav-logo"><span>rpd</span>-512<span>.github.io</span></div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#publications">Research</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+  </div>
+  <a href="mailto:rhiddhiprasad@gmail.com" class="nav-cta btn">get in touch →</a>
+</nav>
 
-  <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">Rhiddhi Prasad Das</div>
-    <div class="sidebar-tagline">Researcher · Engineer</div>
+<div class="content">
 
-    <div class="nav-label">Navigation</div>
-    <nav>
-      <ul>
-        <li><a href="#about"       class="active"><span class="nav-icon">◈</span> About</a></li>
-        <li><a href="#experience"          ><span class="nav-icon">◈</span> Experience</a></li>
-        <li><a href="#publications"        ><span class="nav-icon">◈</span> Publications</a></li>
-        <li><a href="#projects"            ><span class="nav-icon">◈</span> Projects</a></li>
-        <li><a href="#skills"              ><span class="nav-icon">◈</span> Skills</a></li>
-        <li><a href="#education"           ><span class="nav-icon">◈</span> Education</a></li>
-        <li><a href="#certifications"      ><span class="nav-icon">◈</span> Certifications</a></li>
-      </ul>
-    </nav>
-
-    <div class="sidebar-links">
-      <a href="https://rpd-512.github.io" target="_blank">🌐 Website</a>
-      <a href="https://github.com/rpd-512" target="_blank">⌥ GitHub</a>
-      <a href="mailto:rhiddhiprasad@gmail.com">✉ Email</a>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left reveal">
+    <div class="hero-badge">⬤ Open to research collaborations</div>
+    <h1 class="hero-name">Rhiddhi<br><em>Prasad Das</em></h1>
+    <p class="hero-role">Researcher · Engineer · Builder</p>
+    <p class="hero-desc">Undergraduate at KIIT building at the intersection of metaheuristic optimization, ternary logic, robotic inverse kinematics, and biomedical instrumentation. I publish papers, ship tools, and explore the edges of computation.</p>
+    <div class="hero-actions">
+      <a href="https://github.com/rpd-512" target="_blank" class="btn btn-primary">View GitHub →</a>
+      <a href="#publications" class="btn btn-ghost">Read Papers</a>
     </div>
-  </aside>
+    <div class="hero-stats">
+      <div class="h-stat"><span class="num">7</span><span class="lbl">Publications</span></div>
+      <div class="h-stat"><span class="num">8.6</span><span class="lbl">CGPA</span></div>
+      <div class="h-stat"><span class="num">5+</span><span class="lbl">Open-source</span></div>
+      <div class="h-stat"><span class="num">15+</span><span class="lbl">Certificates</span></div>
+    </div>
+  </div>
+  <div class="hero-right reveal">
+    <canvas id="hero-canvas"></canvas>
+  </div>
+</section>
 
-  <!-- ═══ MAIN ═══════════════════════════════════════════════ -->
-  <main>
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="sec-eyebrow">Open Source</p>
+    <h2 class="sec-title">Featured Projects</h2>
+    <p class="sec-sub">Frameworks and tools built at the intersection of research and systems engineering.</p>
+  </div>
+  <div class="proj-grid">
 
-    <!-- ── ABOUT ─────────────────────────────────────────── -->
-    <section id="about">
-      <div class="hero-name">Rhiddhi<br><span>Prasad Das</span></div>
-      <div class="hero-meta">
-        <span>📍 Bhubaneswar, India</span>
-        <span>🎓 KIIT University · CS&SE · Sem 6</span>
-        <span>📧 rhiddhiprasad@gmail.com</span>
+    <div class="proj-card reveal">
+      <div class="proj-viz"><canvas id="viz-forge"></canvas></div>
+      <div class="proj-body">
+        <div class="proj-header">
+          <div class="proj-name">🤖 FORGE</div>
+          <a href="https://github.com/rpd-512/FORGE" target="_blank" class="proj-link">↗ github</a>
+        </div>
+        <p class="proj-desc">Formation of Optimized Robotic Groundtruth Examples — C++ IK solver using DH parameters, KD-Tree nearest-neighbor seeding, and hybrid metaheuristic + gradient descent. Generates large-scale datasets for robot arm training with multi-core support.</p>
+        <div class="proj-tags">
+          <span class="ptag to">C++ · Eigen</span><span class="ptag tb">PSO / GA / DGD</span><span class="ptag tg">Inverse Kinematics</span><span class="ptag tp">Multi-core</span>
+        </div>
       </div>
-      <p class="hero-bio">
-        Undergraduate researcher at the intersection of combinatorial optimization, metaheuristics, hardware design, and biomedical instrumentation. I write papers, build tools, and explore the edges of computation — from ternary logic gates to robotic inverse kinematics.
-      </p>
-      <div class="stats-row">
-        <div class="stat-pill"><span class="num">6</span><span class="lbl">Publications</span></div>
-        <div class="stat-pill"><span class="num">8.6</span><span class="lbl">CGPA</span></div>
-        <div class="stat-pill"><span class="num">4</span><span class="lbl">Projects</span></div>
-        <div class="stat-pill"><span class="num">15+</span><span class="lbl">Certs</span></div>
-      </div>
-    </section>
+    </div>
 
-    <!-- ── EXPERIENCE ────────────────────────────────────── -->
-    <section id="experience">
-      <div class="section-header">
-        <span class="section-label">Experience</span>
-        <div class="section-line"></div>
+    <div class="proj-card reveal">
+      <div class="proj-viz"><canvas id="viz-route"></canvas></div>
+      <div class="proj-body">
+        <div class="proj-header">
+          <div class="proj-name">📡 ROUTE</div>
+          <a href="https://github.com/rpd-512/ROUTE" target="_blank" class="proj-link">↗ github</a>
+        </div>
+        <p class="proj-desc">Route Optimization Using Tunable Evolution — a modular WSN simulation framework for GA, PSO and TLBO routing experiments. Features energy/latency metrics, TUI interface, YAML topology configs, and convergence visualization.</p>
+        <div class="proj-tags">
+          <span class="ptag to">C++ 94%</span><span class="ptag tb">Swarm Algorithms</span><span class="ptag tg">WSN Sim</span><span class="ptag tp">ncurses TUI</span>
+        </div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="exp-card">
-          <div>
-            <div class="card-title">Short-Term Research Intern</div>
-            <div class="card-meta">Laboratory of Plasma Processing &amp; Biophysics · IIT Delhi</div>
-            <div class="card-desc">
-              Developed a microphone-coupled phonocardiogram probe for high-quality cardiac sound acquisition.
-              Worked under Prof. Marshal (Dept. of Physics) on signal capture and system-level design for biomedical instrumentation.
-            </div>
-          </div>
-          <div class="exp-date">Dec 2025 – Jan 2026</div>
+    <div class="proj-card reveal">
+      <div class="proj-viz"><canvas id="viz-sekey"></canvas></div>
+      <div class="proj-body">
+        <div class="proj-header">
+          <div class="proj-name">🔐 seKeyYour</div>
+          <a href="https://github.com/rpd-512/seKeyYour" target="_blank" class="proj-link">↗ github</a>
         </div>
-        <div class="card-footer">
-          <span class="tag tag-green">Biomedical</span>
-          <span class="tag tag-blue">Signal Processing</span>
-          <span class="tag tag-gray">IIT Delhi</span>
+        <p class="proj-desc">Python-based password manager for Linux that uses an external USB device as the physical key store. Passwords are encrypted and tied to the presence of the hardware key — secrets never live on disk alone.</p>
+        <div class="proj-tags">
+          <span class="ptag tr">Security</span><span class="ptag tb">Python</span><span class="ptag tg">Hardware-gated</span><span class="ptag tp">Linux</span>
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ── PUBLICATIONS ──────────────────────────────────── -->
-    <section id="publications">
-      <div class="section-header">
-        <span class="section-label">Publications</span>
-        <div class="section-line"></div>
+    <div class="proj-card reveal">
+      <div class="proj-viz"><canvas id="viz-keylog"></canvas></div>
+      <div class="proj-body">
+        <div class="proj-header">
+          <div class="proj-name">⌨️ keylog</div>
+          <a href="https://github.com/rpd-512/keylog" target="_blank" class="proj-link">↗ github</a>
+        </div>
+        <p class="proj-desc">Cross-platform keystroke logger written separately for Windows and Linux. Captures and timestamped keystrokes to a configurable directory with startup autorun support. Built as an educational security and forensics research tool.</p>
+        <div class="proj-tags">
+          <span class="ptag tr">Systems Security</span><span class="ptag tb">Python</span><span class="ptag tg">Cross-platform</span><span class="ptag tp">Low-level I/O</span>
+        </div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">On Universality and Efficient Arithmetic Realisation of Ternary Logic Gates</div>
-        <div class="card-meta">Rhiddhi Prasad Das, Jyotiprakash Mishra</div>
-        <div class="card-desc">
-          Exhaustively evaluated all 19,683 binary-arity ternary gates; confirmed 3,774 are functionally complete. Proved unary completeness implies full completeness via Rosenberg's theorem (10,529× speedup). Classified gates into 322 isomorphism classes under S₃×Z₂ (47,105× speedup). Best ternary ripple-carry adder achieves 18% lower propagation depth and 9.4% fewer gates than binary NAND at 32-bit width.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">Preprint · Zenodo · Mar 2026</span>
-          <span class="tag tag-green">Ternary Logic</span>
-          <span class="tag tag-blue">Computer Architecture</span>
-        </div>
-      </div>
+  </div>
+</section>
 
-      <div class="card">
-        <div class="card-title">Inverse Design of Patch Antenna Geometry based on S11 using Nearest Refinement Algorithm</div>
-        <div class="card-meta">Rhiddhi Prasad Das, Vishwajeet Sharan</div>
-        <div class="card-desc">
-          Proposed NRA, an adaptive refinement-based inverse design method achieving up to 55% spectral MSE reduction while preserving physically valid antenna geometries.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">WAMS'26 (Accepted) · Jan 2026</span>
-          <span class="tag tag-green">Inverse Design</span>
-          <span class="tag tag-blue">Antenna</span>
-        </div>
-      </div>
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="reveal">
+    <p class="sec-eyebrow">Research</p>
+    <h2 class="sec-title">Publications</h2>
+    <p class="sec-sub">Peer-reviewed work spanning optimization, computer architecture, robotics, and biomedical systems.</p>
+  </div>
+  <div class="pubs-list">
 
-      <div class="card">
-        <div class="card-title">Wireless Sensor Network Optimization using Probabilistic Hop PSO</div>
-        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
-        <div class="card-desc">
-          Introduced PH-PSO, a probabilistic routing PSO achieving faster convergence, lower variance, and improved energy–latency trade-offs across 20–100 node networks over 100 trials.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">IEEE ICAUC'26 · Jan 2026</span>
-          <span class="tag tag-green">PSO</span>
-          <span class="tag tag-blue">WSN</span>
-          <span class="tag tag-gray">IEEE</span>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">On Universality and Efficient Arithmetic Realisation of Ternary Logic Gates</div>
+        <div class="pub-authors">Rhiddhi Prasad Das, Jyotiprakash Mishra</div>
+        <div class="pub-abstract">Exhaustively evaluated all 19,683 binary-arity ternary gates; confirmed 3,774 are functionally complete. Proved unary completeness implies full completeness via Rosenberg's theorem (10,529× speedup). Best ternary ripple-carry adder achieves 18% lower propagation depth and 9.4% fewer gates than binary NAND at 32-bit width.</div>
+        <div class="pub-footer"><span class="pub-venue">Preprint · Zenodo</span><span class="ptag tg">Ternary Logic</span><span class="ptag tb">Computer Architecture</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Solving Inverse Kinematics for Quantized Joint Manipulators Using Metaheuristics and Discrete Gradient Descent</div>
-        <div class="card-meta">Rhiddhi Prasad Das, Junali Jasmine Jena, Suresh Chandra Satapathy</div>
-        <div class="card-desc">
-          Formulated the Inverse Discrete Kinematics problem and proposed a two-stage metaheuristic + DGD solver achieving sub-millimetre accuracy and high stability across multiple robot models.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">IEEE INDICON'26 · Dec 2025</span>
-          <span class="tag tag-green">Robotics</span>
-          <span class="tag tag-blue">Metaheuristics</span>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">Inverse Design of Patch Antenna Geometry based on S11 using Nearest Refinement Algorithm</div>
+        <div class="pub-authors">Rhiddhi Prasad Das, Vishwajeet Sharan</div>
+        <div class="pub-abstract">Proposed NRA, an adaptive refinement-based inverse design method achieving up to 55% spectral MSE reduction while preserving physically valid antenna geometries.</div>
+        <div class="pub-footer"><span class="pub-venue">WAMS'26 (Accepted)</span><span class="ptag tb">Antenna Design</span><span class="ptag to">Inverse Methods</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Solving 0-1 Knapsack and Bin Packing using Logical Social Group Optimization</div>
-        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
-        <div class="card-desc">
-          Developed LSGO, a Boolean logic-driven SGO variant that improves solution quality, stability, and computational efficiency for combinatorial optimization problems.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">IEEE Access · May 2025</span>
-          <span class="tag tag-green">Combinatorial Opt.</span>
-          <span class="tag tag-gray">IEEE</span>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2026</div>
+      <div>
+        <div class="pub-title">Wireless Sensor Network Optimization using Probabilistic Hop PSO</div>
+        <div class="pub-authors">Rhiddhi Prasad Das et al.</div>
+        <div class="pub-abstract">Introduced PH-PSO, achieving faster convergence, lower variance, and improved energy–latency trade-offs across 20–100 node networks over 100 trials.</div>
+        <div class="pub-footer"><span class="pub-venue">IEEE ICAUC'26</span><span class="ptag tg">PSO</span><span class="ptag tb">WSN</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Hybrid Binary SGO-GA for Solving MAX-SAT</div>
-        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
-        <div class="card-desc">
-          Proposed a hybrid SGO-GA framework combining exploration and exploitation to outperform conventional metaheuristics on NP-hard MAX-SAT instances.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">Procedia Computer Science · Nov 2024</span>
-          <span class="tag tag-green">MAX-SAT</span>
-          <span class="tag tag-blue">Hybrid Algorithms</span>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2025</div>
+      <div>
+        <div class="pub-title">Solving Inverse Kinematics for Quantized Joint Manipulators Using Metaheuristics and Discrete Gradient Descent</div>
+        <div class="pub-authors">Rhiddhi Prasad Das, Junali Jasmine Jena, Suresh Chandra Satapathy</div>
+        <div class="pub-abstract">Formulated the Inverse Discrete Kinematics problem; proposed a two-stage metaheuristic + DGD solver achieving sub-millimetre accuracy across multiple robot models.</div>
+        <div class="pub-footer"><span class="pub-venue">IEEE INDICON'26</span><span class="ptag to">Robotics</span><span class="ptag tp">Metaheuristics</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Reducing Bird Deaths from Electrocution using a Motion Sensor</div>
-        <div class="card-meta">Rhiddhi Prasad Das</div>
-        <div class="card-desc">
-          Designed a PIR sensor-based deterrent system using Arduino Nano to prevent bird electrocution, validated through field observations.
-        </div>
-        <div class="card-footer">
-          <span class="venue-badge published">IJSREM · Aug 2022</span>
-          <span class="tag tag-green">IoT</span>
-          <span class="tag tag-blue">Arduino</span>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2025</div>
+      <div>
+        <div class="pub-title">Solving 0-1 Knapsack and Bin Packing using Logical Social Group Optimization</div>
+        <div class="pub-authors">Rhiddhi Prasad Das et al.</div>
+        <div class="pub-abstract">Developed LSGO, a Boolean logic-driven SGO variant improving solution quality, stability, and computational efficiency for NP-hard combinatorial optimization.</div>
+        <div class="pub-footer"><span class="pub-venue">IEEE Access</span><span class="ptag tg">Combinatorial Opt.</span><span class="ptag tb">SGO</span></div>
       </div>
-    </section>
+    </div>
 
-    <!-- ── PROJECTS ───────────────────────────────────────── -->
-    <section id="projects">
-      <div class="section-header">
-        <span class="section-label">Projects</span>
-        <div class="section-line"></div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2024</div>
+      <div>
+        <div class="pub-title">Hybrid Binary SGO-GA for Solving MAX-SAT</div>
+        <div class="pub-authors">Rhiddhi Prasad Das et al.</div>
+        <div class="pub-abstract">Proposed a hybrid SGO-GA framework combining exploration and exploitation to outperform conventional metaheuristics on NP-hard MAX-SAT instances.</div>
+        <div class="pub-footer"><span class="pub-venue">Procedia Computer Science</span><span class="ptag to">MAX-SAT</span><span class="ptag tp">Hybrid GA</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">Py-Refinery</div>
-        <div class="card-meta">Custom library for a novel adaptive search algorithm</div>
-        <div class="card-desc">
-          Python/C++ library implementing the Nearest Refiner (NR) algorithm — a refinement-based local optimization method using numerical perturbation and gradient estimation. Built without external ML frameworks; showcases an alternative to end-to-end backpropagation.
-        </div>
-        <div class="card-footer">
-          <span class="tag tag-green">Python</span>
-          <span class="tag tag-blue">C++</span>
-          <span class="tag tag-gray">Optimization</span>
-          <a href="https://github.com/rpd-512/pyrefinery" target="_blank" class="link-sm">↗ github</a>
-        </div>
+    <div class="pub-card reveal">
+      <div class="pub-year">2022</div>
+      <div>
+        <div class="pub-title">Reducing Bird Deaths from Electrocution using a Motion Sensor</div>
+        <div class="pub-authors">Rhiddhi Prasad Das</div>
+        <div class="pub-abstract">Designed a PIR sensor-based deterrent system using Arduino Nano to prevent bird electrocution on power lines, validated through field observations.</div>
+        <div class="pub-footer"><span class="pub-venue">IJSREM</span><span class="ptag tg">IoT</span><span class="ptag tb">Arduino</span></div>
       </div>
+    </div>
 
-      <div class="card">
-        <div class="card-title">ROUTE</div>
-        <div class="card-meta">Routing Optimization Using Tunable Evolution</div>
-        <div class="card-desc">
-          Lightweight, modular WSN simulation framework for evaluating routing strategies. Flexible TUI-based interface with visualization. Supports GA, PSO, and TLBO algorithm integration.
-        </div>
-        <div class="card-footer">
-          <span class="tag tag-green">C++</span>
-          <span class="tag tag-blue">Python</span>
-          <span class="tag tag-gray">WSN · ncurses</span>
-          <a href="https://github.com/rpd-512/ROUTE" target="_blank" class="link-sm">↗ github</a>
-        </div>
-      </div>
+  </div>
+</section>
 
-      <div class="card">
-        <div class="card-title">FORGE</div>
-        <div class="card-meta">Formation of Optimized Robotic Ground-Truth Examples</div>
-        <div class="card-desc">
-          Data generation and simulation framework for large-scale inverse kinematics ground-truth datasets. Combines analytical forward kinematics with evolutionary optimization and collision detection. Designed for rapid NN prototyping in robotics.
-        </div>
-        <div class="card-footer">
-          <span class="tag tag-green">C++</span>
-          <span class="tag tag-blue">Eigen</span>
-          <span class="tag tag-gray">Robotics · Matplotlib</span>
-          <a href="https://github.com/rpd-512/FORGE" target="_blank" class="link-sm">↗ github</a>
-        </div>
-      </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal">
+    <p class="sec-eyebrow">Expertise</p>
+    <h2 class="sec-title">Skills & Stack</h2>
+  </div>
+  <div class="skills-wrapper reveal" id="skill-bars">
+    <div>
+      <div class="skill-col-title">// Core Languages</div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">C++</span><span class="skill-bar-pct">92%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="92"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Python</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">C</span><span class="skill-bar-pct">82%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="82"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Java / JavaScript</span><span class="skill-bar-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Assembly / HDL</span><span class="skill-bar-pct">65%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="65"></div></div></div>
+    </div>
+    <div>
+      <div class="skill-col-title">// Research Areas</div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Metaheuristic Algorithms</span><span class="skill-bar-pct">95%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="95"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Inverse Kinematics</span><span class="skill-bar-pct">88%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="88"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">WSN Optimization</span><span class="skill-bar-pct">85%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="85"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Computer Architecture</span><span class="skill-bar-pct">78%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="78"></div></div></div>
+      <div class="skill-bar"><div class="skill-bar-header"><span class="skill-bar-name">Biomedical Instrumentation</span><span class="skill-bar-pct">70%</span></div><div class="skill-bar-track"><div class="skill-bar-fill" data-w="70"></div></div></div>
+    </div>
+  </div>
+  <div class="reveal" style="margin-top:2rem">
+    <div class="skill-col-title">// Technologies & Tools</div>
+    <div class="tech-cloud">
+      <span class="tech-chip">Eigen</span><span class="tech-chip">OpenMP</span><span class="tech-chip">pybind11</span><span class="tech-chip">YAML-CPP</span><span class="tech-chip">CMake</span><span class="tech-chip">Matplotlib</span><span class="tech-chip">Arduino</span><span class="tech-chip">Raspberry Pi</span><span class="tech-chip">Linux Admin</span><span class="tech-chip">MySQL</span><span class="tech-chip">LAMP</span><span class="tech-chip">ncurses</span><span class="tech-chip">KD-Trees</span><span class="tech-chip">PSO</span><span class="tech-chip">GA</span><span class="tech-chip">TLBO</span><span class="tech-chip">SGO</span><span class="tech-chip">DH Parameters</span><span class="tech-chip">Signal Processing</span><span class="tech-chip">HDL</span>
+    </div>
+  </div>
+</section>
 
-      <div class="card">
-        <div class="card-title">Nand2Tetris</div>
-        <div class="card-meta">Building a modern computer from first principles</div>
-        <div class="card-desc">
-          End-to-end implementation: NAND gate → RAM → Assembler → VM → Compiler → OS → Games. Full stack in hardware description language, assembly, and custom toolchain.
-        </div>
-        <div class="card-footer">
-          <span class="tag tag-green">HDL</span>
-          <span class="tag tag-blue">Assembly</span>
-          <span class="tag tag-gray">Compiler Design</span>
-          <a href="https://github.com/rpd-512/nand2tetris" target="_blank" class="link-sm">↗ github</a>
+<!-- EXPERIENCE & EDUCATION -->
+<section id="experience">
+  <div class="reveal">
+    <p class="sec-eyebrow">Background</p>
+    <h2 class="sec-title">Experience & Education</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem" class="reveal">
+    <div>
+      <div class="skill-col-title" style="font-family:var(--mono);font-size:.68rem;color:var(--green);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.4rem">// Work Experience</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Dec 2025 – Jan 2026</div>
+          <div class="tl-title">Short-Term Research Intern</div>
+          <div class="tl-org">Lab of Plasma Processing & Biophysics · IIT Delhi</div>
+          <div class="tl-desc">Developed a microphone-coupled phonocardiogram probe for cardiac sound acquisition. Worked under Prof. Marshal on signal capture and system-level biomedical instrumentation design.</div>
         </div>
       </div>
-    </section>
+    </div>
+    <div>
+      <div class="skill-col-title" style="font-family:var(--mono);font-size:.68rem;color:var(--green);letter-spacing:.15em;text-transform:uppercase;margin-bottom:1.4rem">// Education</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">Jul 2023 – May 2027</div>
+          <div class="tl-title">B.Tech · CS & Systems Engineering</div>
+          <div class="tl-org">Kalinga Institute of Industrial Technology (KIIT)</div>
+          <div class="tl-desc">CGPA: 8.6 · Semester 6<br>Compiler Design, ARM Architecture, Machine Learning, Computer Architecture, Algorithm Design, Linear Algebra, Computer Networks.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ── SKILLS ─────────────────────────────────────────── -->
-    <section id="skills">
-      <div class="section-header">
-        <span class="section-label">Skills &amp; Technologies</span>
-        <div class="section-line"></div>
-      </div>
-      <div class="skills-grid">
-        <div class="skill-group">
-          <div class="skill-group-title">Languages</div>
-          <div class="skill-list">C++ · C · Python · Java<br>JavaScript · PHP · MySQL<br>Assembly · Arduino · Bash</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Algorithms</div>
-          <div class="skill-list">Swarm Intelligence · PSO<br>Genetic Algorithms · SGO<br>Metaheuristics · MAX-SAT</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Systems</div>
-          <div class="skill-list">Linux Admin · Automation<br>LAMP Architecture<br>Database Management</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Hardware / IoT</div>
-          <div class="skill-list">Arduino · Raspberry Pi<br>ARM Architecture<br>HDL · Digital Systems</div>
-        </div>
-        <div class="skill-group">
-          <div class="skill-group-title">Research Areas</div>
-          <div class="skill-list">Combinatorial Opt.<br>Inverse Kinematics<br>Biomedical Instrumentation<br>Antenna Inverse Design</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── EDUCATION ──────────────────────────────────────── -->
-    <section id="education">
-      <div class="section-header">
-        <span class="section-label">Education</span>
-        <div class="section-line"></div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-degree">B.Tech — Computer Science &amp; Systems Engineering</div>
-        <div class="edu-school">Kalinga Institute of Industrial Technology (KIIT) · Jul 2023 – May 2027</div>
-        <div class="edu-detail">
-          Current Semester: 6th &nbsp;·&nbsp; CGPA: 8.6<br>
-          Coursework: Compiler Design, ARM Architecture, Machine Learning, Computer Architecture, Linear Algebra, Data Structures, Differential Equations, Computer Networks, Algorithm Design
-        </div>
-      </div>
-    </section>
-
-    <!-- ── CERTIFICATIONS ────────────────────────────────── -->
-    <section id="certifications">
-      <div class="section-header">
-        <span class="section-label">Certifications</span>
-        <div class="section-line"></div>
-      </div>
-
-      <div class="card" style="padding: 0.5rem 1.5rem;">
-        <div class="cert-item">
-          <div><div class="cert-name">Build a Modern Computer from First Principles: Nand to Tetris</div><div class="cert-issuer">The Hebrew University of Jerusalem</div></div>
-          <div class="cert-date">May 2024</div>
-        </div>
-        <div class="cert-item">
-          <div><div class="cert-name">Introduction to Mathematical Thinking</div><div class="cert-issuer">Stanford Online</div></div>
-          <div class="cert-date">Dec 2023</div>
-        </div>
-        <div class="cert-item">
-          <div><div class="cert-name">Using Python to Access Web Data</div><div class="cert-issuer">University of Michigan</div></div>
-          <div class="cert-date">Jun 2020</div>
-        </div>
-        <div class="cert-item">
-          <div><div class="cert-name">Python for Data Science, AI &amp; Development</div><div class="cert-issuer">IBM</div></div>
-          <div class="cert-date">May 2020</div>
-        </div>
-        <div class="cert-item">
-          <div><div class="cert-name">The Arduino Platform and C Programming</div><div class="cert-issuer">University of California, Irvine</div></div>
-          <div class="cert-date">May 2020</div>
-        </div>
-        <div class="cert-item">
-          <div><div class="cert-name">C for Everyone: Programming Fundamentals</div><div class="cert-issuer">University of California, Santa Cruz</div></div>
-          <div class="cert-date">May 2020</div>
-        </div>
-        <div class="cert-item" style="border-bottom: none;">
-          <div><div class="cert-name" style="color: var(--muted);">+ 15 more certifications</div></div>
-        </div>
-      </div>
-    </section>
-
-  </main>
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <h2 class="contact-title">Let's work together</h2>
+    <p class="contact-sub">Open to research collaborations, internships, and conversations about optimization, systems, and robotics.</p>
+    <div class="contact-links">
+      <a href="mailto:rhiddhiprasad@gmail.com" class="c-link">✉ rhiddhiprasad@gmail.com</a>
+      <a href="https://github.com/rpd-512" target="_blank" class="c-link">⌥ github.com/rpd-512</a>
+      <a href="https://rpd-512.github.io" target="_blank" class="c-link">🌐 rpd-512.github.io</a>
+    </div>
+  </div>
+</section>
 </div>
 
+<footer>© 2026 Rhiddhi Prasad Das · Built with HTML / CSS / Canvas · Hosted on GitHub Pages</footer>
+
 <script>
-  // Active nav highlighting on scroll
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a');
+/* ════════════════════════════════════════════════════════
+   BACKGROUND — particle web
+════════════════════════════════════════════════════════ */
+(()=>{
+  const c=document.getElementById('bg-canvas'),x=c.getContext('2d');
+  let W,H,pts=[];
+  const resize=()=>{W=c.width=innerWidth;H=c.height=innerHeight;init()};
+  const init=()=>{pts=[];const n=Math.floor(W*H/12000);for(let i=0;i<n;i++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:.6+Math.random()*1.2})};
+  const draw=()=>{
+    x.clearRect(0,0,W,H);
+    pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle='rgba(79,140,255,.55)';x.fill()});
+    pts.forEach((a,i)=>pts.slice(i+1).forEach(b=>{const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<110){x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.strokeStyle=`rgba(15,240,160,${.1*(1-d/110)})`;x.lineWidth=.5;x.stroke()}}));
+    requestAnimationFrame(draw);
+  };
+  window.addEventListener('resize',resize);resize();draw();
+})();
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(a => a.classList.remove('active'));
-        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
-      }
+/* ════════════════════════════════════════════════════════
+   HERO CANVAS — rotating robotic arm with IK trace
+════════════════════════════════════════════════════════ */
+(()=>{
+  const c=document.getElementById('hero-canvas');if(!c)return;
+  const x=c.getContext('2d');c.width=360;c.height=360;
+  const cx=180,cy=230,segs=[85,65,50,35];let t=0;
+  const getJoints=tt=>{
+    const angles=[-Math.PI/2+Math.sin(tt*.7)*.45,Math.sin(tt*.55+1)*.6,Math.sin(tt*.8+2)*.5,Math.sin(tt*.65+3)*.45];
+    let ax=cx,ay=cy,ca=0,j=[[ax,ay]];
+    angles.forEach((a,i)=>{ca+=a;ax+=segs[i]*Math.cos(ca);ay+=segs[i]*Math.sin(ca);j.push([ax,ay])});
+    return j;
+  };
+  const draw=()=>{
+    x.clearRect(0,0,360,360);
+    // grid
+    x.strokeStyle='rgba(26,34,53,.6)';x.lineWidth=1;
+    for(let i=0;i<360;i+=24){x.beginPath();x.moveTo(i,0);x.lineTo(i,360);x.stroke();x.beginPath();x.moveTo(0,i);x.lineTo(360,i);x.stroke();}
+    // trajectory
+    x.beginPath();
+    for(let tt=t-2;tt<=t+2;tt+=.05){const j=getJoints(tt),e=j[j.length-1];tt===t-2?x.moveTo(e[0],e[1]):x.lineTo(e[0],e[1])}
+    x.strokeStyle='rgba(15,240,160,.12)';x.lineWidth=1.5;x.setLineDash([3,5]);x.stroke();x.setLineDash([]);
+    // arm
+    const joints=getJoints(t);
+    joints.forEach(([jx,jy],i)=>{
+      if(!i)return;const [px,py]=joints[i-1];
+      const g=x.createLinearGradient(px,py,jx,jy);g.addColorStop(0,'#0ff0a0');g.addColorStop(1,'#4f8cff');
+      x.beginPath();x.moveTo(px,py);x.lineTo(jx,jy);x.strokeStyle=g;x.lineWidth=9-i*1.8;x.lineCap='round';x.stroke();
     });
-  }, { threshold: 0.3 });
+    joints.forEach(([jx,jy],i)=>{
+      x.beginPath();x.arc(jx,jy,i===0?7:5-i*.7,0,Math.PI*2);
+      const col=i===0?'#0ff0a0':'#4f8cff';x.fillStyle=col;x.shadowBlur=14;x.shadowColor=col;x.fill();x.shadowBlur=0;
+    });
+    // end effector
+    const [ex,ey]=joints[joints.length-1];
+    x.beginPath();x.arc(ex,ey,3,0,Math.PI*2);x.fillStyle='#fff';x.shadowBlur=18;x.shadowColor='#0ff0a0';x.fill();x.shadowBlur=0;
+    // data scatter
+    for(let i=0;i<22;i++){const px=40+Math.sin(i*2.1+t*.08)*(140),py=40+Math.cos(i*1.8+t*.06)*90;x.beginPath();x.arc(px+cx-90,py+90,1.4,0,Math.PI*2);x.fillStyle=`rgba(79,140,255,${.35+.3*Math.sin(i+t*.15)})`;x.fill();}
+    // labels
+    x.font='10px Fira Code,monospace';x.fillStyle='rgba(74,88,120,.8)';x.fillText('IK solver · DH params · FORGE v1.0',10,18);
+    const [ex2,ey2]=joints[joints.length-1];x.fillStyle='rgba(15,240,160,.5)';x.fillText(`end: (${Math.round(ex2-cx)}, ${Math.round(cy-ey2)})`,10,34);
+    t+=.012;requestAnimationFrame(draw);
+  };draw();
+})();
 
-  sections.forEach(s => observer.observe(s));
+/* ════════════════════════════════════════════════════════
+   PROJECT VIZ HELPER
+════════════════════════════════════════════════════════ */
+const getVizCanvas=(id)=>{
+  const c=document.getElementById(id);if(!c)return null;
+  const par=c.parentElement;c.width=par.offsetWidth||480;c.height=190;
+  return {c,x:c.getContext('2d'),W:c.width,H:190};
+};
+
+/* ── VIZ: FORGE — robot arm compact ── */
+(()=>{
+  const v=getVizCanvas('viz-forge');if(!v)return;
+  const {c,x,W,H}=v;const cx=W/2,cy=H-25,segs=[50,40,30,22];let t=0;
+  const draw=()=>{
+    x.clearRect(0,0,W,H);x.fillStyle='#060810';x.fillRect(0,0,W,H);
+    // grid dots
+    for(let i=20;i<W;i+=32)for(let j=20;j<H;j+=32){x.beginPath();x.arc(i,j,.8,0,Math.PI*2);x.fillStyle='rgba(26,34,53,.8)';x.fill();}
+    // scatter cloud (dataset points)
+    for(let i=0;i<30;i++){const px=20+Math.sin(i*1.9+t*.06)*(W/2-30)+W/2-20,py=15+Math.cos(i*2.3+t*.05)*50;x.beginPath();x.arc(px,py,1.5,0,Math.PI*2);x.fillStyle=`rgba(79,140,255,${.25+.25*Math.sin(i*1.1+t*.12)})`;x.fill();}
+    // base circle
+    x.beginPath();x.arc(cx,cy,8,0,Math.PI*2);x.fillStyle='rgba(15,240,160,.12)';x.fill();x.strokeStyle='rgba(15,240,160,.4)';x.lineWidth=1.5;x.stroke();
+    // arm
+    const angles=[-Math.PI/2+Math.sin(t*.8)*.5,Math.sin(t*.55+1)*.65,Math.sin(t*.9+2)*.55,Math.sin(t*.5+3)*.45];
+    let ax=cx,ay=cy,ca=0,j=[[ax,ay]];angles.forEach((a,i)=>{ca+=a;ax+=segs[i]*Math.cos(ca);ay+=segs[i]*Math.sin(ca);j.push([ax,ay])});
+    j.forEach(([jx,jy],i)=>{if(!i)return;const [px,py]=j[i-1];const g=x.createLinearGradient(px,py,jx,jy);g.addColorStop(0,'#0ff0a0');g.addColorStop(1,'#4f8cff');x.beginPath();x.moveTo(px,py);x.lineTo(jx,jy);x.strokeStyle=g;x.lineWidth=7-i*1.2;x.lineCap='round';x.stroke();});
+    j.forEach(([jx,jy],i)=>{x.beginPath();x.arc(jx,jy,i===0?5:3.5-i*.4,0,Math.PI*2);const col=i===0?'#0ff0a0':'#4f8cff';x.fillStyle=col;x.shadowBlur=8;x.shadowColor=col;x.fill();x.shadowBlur=0;});
+    x.font='9px Fira Code,monospace';x.fillStyle='rgba(15,240,160,.45)';x.fillText('[ robotic IK · DH parameters · dataset gen ]',8,14);
+    t+=.014;requestAnimationFrame(draw);
+  };draw();
+})();
+
+/* ── VIZ: ROUTE — animated WSN network ── */
+(()=>{
+  const v=getVizCanvas('viz-route');if(!v)return;
+  const {c,x,W,H}=v;
+  const sink={x:W/2,y:H/2};
+  const nodes=Array.from({length:14},(_,i)=>({x:25+Math.random()*(W-50),y:15+Math.random()*(H-30),e:.4+Math.random()*.6,id:i}));
+  const pkts=nodes.filter(()=>Math.random()>.3).map(n=>({n,p:Math.random(),s:.006+Math.random()*.009}));
+  // convergence data
+  const conv=Array.from({length:40},(_,i)=>Math.exp(-i*.1)*18+Math.random()*2);
+  let t=0;
+  const draw=()=>{
+    x.clearRect(0,0,W,H);x.fillStyle='#060810';x.fillRect(0,0,W,H);
+    // edges
+    nodes.forEach(n=>{x.beginPath();x.moveTo(n.x,n.y);x.lineTo(sink.x,sink.y);x.strokeStyle='rgba(26,34,53,.6)';x.lineWidth=.8;x.stroke();});
+    // range rings
+    nodes.slice(0,4).forEach(n=>{x.beginPath();x.arc(n.x,n.y,28,0,Math.PI*2);x.strokeStyle=`rgba(79,140,255,${.04+.02*Math.sin(t+n.id)})`;x.lineWidth=1;x.stroke();});
+    // packets
+    pkts.forEach(pk=>{pk.p+=pk.s;if(pk.p>1)pk.p=0;const px=pk.n.x+(sink.x-pk.n.x)*pk.p,py=pk.n.y+(sink.y-pk.n.y)*pk.p;x.beginPath();x.arc(px,py,2.5,0,Math.PI*2);x.fillStyle='#0ff0a0';x.shadowBlur=8;x.shadowColor='#0ff0a0';x.fill();x.shadowBlur=0;});
+    // nodes
+    nodes.forEach(n=>{x.beginPath();x.arc(n.x,n.y,4.5,0,Math.PI*2);x.fillStyle=`rgba(${Math.round(50+n.e*60)},${Math.round(80+n.e*80)},255,.85)`;x.shadowBlur=6;x.shadowColor='#4f8cff';x.fill();x.shadowBlur=0;});
+    // sink
+    x.beginPath();x.arc(sink.x,sink.y,9,0,Math.PI*2);x.fillStyle='rgba(15,240,160,.15)';x.fill();x.strokeStyle='#0ff0a0';x.lineWidth=2;x.shadowBlur=14;x.shadowColor='#0ff0a0';x.stroke();x.shadowBlur=0;
+    // convergence chart
+    const ox=W-115,oy=12,cw=105,ch=40;
+    x.fillStyle='rgba(15,20,32,.7)';x.fillRect(ox,oy,cw,ch+14);
+    x.font='8px Fira Code,monospace';x.fillStyle='rgba(15,240,160,.4)';x.fillText('PSO convergence',ox+4,oy+9);
+    x.beginPath();
+    conv.forEach((v,i)=>{const fx=ox+4+i*(cw-8)/39,fy=oy+ch-v*.9+4;i===0?x.moveTo(fx,fy):x.lineTo(fx,fy)});
+    x.strokeStyle='rgba(15,240,160,.7)';x.lineWidth=1.5;x.stroke();
+    x.font='9px Fira Code,monospace';x.fillStyle='rgba(15,240,160,.45)';x.fillText('[ WSN · PH-PSO · energy / latency ]',8,H-8);
+    t+=.015;requestAnimationFrame(draw);
+  };draw();
+})();
+
+/* ── VIZ: seKeyYour — USB + encryption matrix ── */
+(()=>{
+  const v=getVizCanvas('viz-sekey');if(!v)return;
+  const {c,x,W,H}=v;
+  const chars='ABCDEFabcdef0123456789!@#$';
+  const cols=Math.floor(W/16);
+  const drops=Array.from({length:cols},()=>Math.random()*H);
+  let t=0;
+  const draw=()=>{
+    x.fillStyle='rgba(6,8,16,.14)';x.fillRect(0,0,W,H);
+    x.font='11px Fira Code,monospace';
+    drops.forEach((y,i)=>{x.fillStyle=`rgba(15,240,160,${.1+Math.random()*.5})`;x.fillText(chars[Math.floor(Math.random()*chars.length)],i*16,y);if(y>H&&Math.random()>.97)drops[i]=0;else drops[i]+=13;});
+    // USB key graphic
+    const ux=W/2,uy=H/2,glow=.5+.5*Math.sin(t*2);
+    x.save();x.translate(ux,uy);
+    x.shadowBlur=22*glow;x.shadowColor='#0ff0a0';
+    x.fillStyle=`rgba(15,240,160,${.22+.3*glow})`;x.fillRect(-16,-26,32,7);x.fillRect(-3,-26,7,38);
+    x.strokeStyle=`rgba(15,240,160,${.5+.3*glow})`;x.lineWidth=1.5;x.strokeRect(-16,-26,32,7);x.strokeRect(-3,-26,7,38);
+    x.beginPath();x.arc(0,18,5,0,Math.PI*2);x.stroke();x.shadowBlur=0;x.restore();
+    // orbiting lock rings
+    [38,60,82].forEach(r=>{x.beginPath();x.arc(ux,uy,r,0,Math.PI*2);x.strokeStyle=`rgba(15,240,160,${.05+.03*Math.sin(t*.8+r*.05)})`;x.lineWidth=1;x.stroke();});
+    // bit indicators
+    for(let i=0;i<8;i++){const bx=ux+70+i*14,by=uy-8,on=Math.sin(t*3+i*1.7)>.2;x.beginPath();x.arc(bx,by,3,0,Math.PI*2);x.fillStyle=on?'rgba(15,240,160,.8)':'rgba(26,34,53,.8)';x.fill();}
+    x.font='9px Fira Code,monospace';x.fillStyle='rgba(15,240,160,.45)';x.fillText('[ AES-256 · USB key-store · Linux ]',8,H-8);
+    t+=.019;requestAnimationFrame(draw);
+  };draw();
+})();
+
+/* ── VIZ: keylog — keyboard heatmap ── */
+(()=>{
+  const v=getVizCanvas('viz-keylog');if(!v)return;
+  const {c,x,W,H}=v;
+  const rows=[['Q','W','E','R','T','Y','U','I','O','P'],['A','S','D','F','G','H','J','K','L'],['Z','X','C','V','B','N','M']];
+  const heat={};rows.flat().forEach(k=>heat[k]=Math.random()*.5);
+  'ASDFTHENIOSR'.split('').forEach(k=>{if(heat[k]!==undefined)heat[k]=.55+Math.random()*.45});
+  const logs=['[10:23:14] keystroke captured','[10:23:15] 47 events/sec','[10:23:16] log written → /var/log'];
+  let t=0;
+  const draw=()=>{
+    x.clearRect(0,0,W,H);x.fillStyle='#060810';x.fillRect(0,0,W,H);
+    const kw=Math.min(28,W/12),kh=24,gap=3;const offsets=[0,kw*.5,kw];
+    rows.forEach((row,ri)=>{
+      const sx=(W-(row.length*(kw+gap)))/2+offsets[ri],sy=16+ri*(kh+gap);
+      row.forEach((key,ki)=>{
+        const h=heat[key]||0,bx=sx+ki*(kw+gap),by=sy;
+        x.fillStyle=`rgba(${Math.round(h*220)},${Math.round(h*70)},255,${.07+h*.42})`;x.fillRect(bx,by,kw,kh);
+        x.strokeStyle=`rgba(${Math.round(h*220)},${Math.round(h*70)},255,${.15+h*.5})`;x.lineWidth=.8;x.strokeRect(bx,by,kw,kh);
+        x.font=`${8+h*2.5}px Fira Code,monospace`;x.fillStyle=`rgba(255,255,255,${.25+h*.6})`;x.textAlign='center';x.fillText(key,bx+kw/2,by+kh/2+3.5);
+        if(h>.65){x.beginPath();x.arc(bx+kw/2,by+kh/2,2.5+Math.sin(t*3+ki)*.5*h*5,0,Math.PI*2);x.strokeStyle=`rgba(255,${Math.round(60*h)},${Math.round(120*(1-h))},.5)`;x.lineWidth=.8;x.stroke();}
+      });
+    });
+    x.textAlign='left';
+    logs.forEach((ln,i)=>{x.font='9px Fira Code,monospace';x.fillStyle=`rgba(15,240,160,${.25+i*.15})`;x.fillText(ln,8,115+i*13);});
+    if(Math.floor(t*28)%80===0){const ks=Object.keys(heat);heat[ks[Math.floor(Math.random()*ks.length)]]=(heat[ks[0]]||0)*.98;}
+    x.font='9px Fira Code,monospace';x.fillStyle='rgba(255,79,110,.45)';x.fillText('[ keystroke capture · Win / Linux ]',8,H-8);
+    t+=.016;requestAnimationFrame(draw);
+  };draw();
+})();
+
+/* ════════════════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════════════════ */
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* SKILL BARS */
+new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.skill-bar-fill').forEach(b=>b.style.width=b.dataset.w+'%')}})},{threshold:.2}).observe(document.getElementById('skill-bars'));
+
+/* ACTIVE NAV */
+const secs=document.querySelectorAll('section[id]'),nls=document.querySelectorAll('.nav-links a');
+secs.forEach(s=>new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){nls.forEach(a=>a.classList.remove('active'));const m=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);if(m)m.classList.add('active')}})},{threshold:.4}).observe(s));
 </script>
-
 </body>
 </html>
