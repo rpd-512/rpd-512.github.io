@@ -1,38 +1,749 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>My Profile</title>
-<link href="css/style.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Autour One" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rhiddhi Prasad Das</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,600;1,300&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── RESET & VARIABLES ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0c0f;
+      --surface:   #111418;
+      --border:    #1e2530;
+      --accent:    #00e5a0;
+      --accent2:   #3d6fff;
+      --muted:     #4a5568;
+      --text:      #c8d0dc;
+      --text-hi:   #edf2f7;
+      --mono:      'IBM Plex Mono', monospace;
+      --display:   'Syne', sans-serif;
+      --radius:    4px;
+      --gap:       2rem;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── LAYOUT ────────────────────────────────────────────── */
+    .site-wrapper {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ───────────────────────────────────────────── */
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      padding: 2.5rem 1.75rem;
+      background: var(--surface);
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-hi);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .sidebar-tagline {
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+
+    .nav-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    nav ul { list-style: none; margin-bottom: 2rem; }
+    nav ul li { margin-bottom: 0.1rem; }
+    nav ul li a {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.6rem;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.78rem;
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      background: rgba(0,229,160,0.08);
+      color: var(--accent);
+    }
+    nav ul li a .nav-icon {
+      width: 14px; text-align: center; opacity: 0.6;
+    }
+
+    .sidebar-links {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .sidebar-links a {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .sidebar-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── MAIN CONTENT ──────────────────────────────────────── */
+    main {
+      padding: 3rem 3.5rem;
+      max-width: 860px;
+    }
+
+    /* ── SECTIONS ──────────────────────────────────────────── */
+    section {
+      margin-bottom: 5rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.5s ease forwards;
+    }
+    section:nth-child(1) { animation-delay: 0.05s; }
+    section:nth-child(2) { animation-delay: 0.1s; }
+    section:nth-child(3) { animation-delay: 0.15s; }
+    section:nth-child(4) { animation-delay: 0.2s; }
+    section:nth-child(5) { animation-delay: 0.25s; }
+    section:nth-child(6) { animation-delay: 0.3s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .section-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    #about .hero-name {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.05;
+      color: var(--text-hi);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    #about .hero-name span { color: var(--accent); }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 0.4rem; }
+
+    .hero-bio {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.85;
+      max-width: 600px;
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    /* ── STAT PILLS ────────────────────────────────────────── */
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .stat-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.6rem 1rem;
+      text-align: center;
+      min-width: 90px;
+    }
+    .stat-pill .num {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      display: block;
+    }
+    .stat-pill .lbl {
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── CARDS ─────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .card:hover { border-color: #2a3545; transform: translateX(3px); }
+    .card:hover::before { opacity: 1; }
+
+    .card-title {
+      font-family: var(--display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-hi);
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+    .card-meta {
+      font-size: 0.68rem;
+      color: var(--accent2);
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.04em;
+    }
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .card-footer {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    /* ── TAGS ──────────────────────────────────────────────── */
+    .tag {
+      font-size: 0.62rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .tag-green  { background: rgba(0,229,160,0.1); color: var(--accent); }
+    .tag-blue   { background: rgba(61,111,255,0.12); color: #7b9cff; }
+    .tag-gray   { background: rgba(74,85,104,0.25); color: var(--muted); }
+
+    /* ── BADGES / VENUE ────────────────────────────────────── */
+    .venue-badge {
+      font-size: 0.62rem;
+      padding: 0.18rem 0.45rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--muted);
+    }
+    .venue-badge.published { border-color: rgba(0,229,160,0.4); color: var(--accent); }
+
+    /* ── LINKS ─────────────────────────────────────────────── */
+    .link-sm {
+      font-size: 0.68rem;
+      color: var(--accent2);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+    .link-sm:hover { opacity: 1; text-decoration: underline; }
+
+    /* ── EXPERIENCE ────────────────────────────────────────── */
+    .exp-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+    }
+    .exp-date {
+      font-size: 0.68rem;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 0.2rem;
+    }
+
+    /* ── SKILLS GRID ───────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .skill-group-title {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .skill-list {
+      font-size: 0.74rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+
+    /* ── CERT LIST ─────────────────────────────────────────── */
+    .cert-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+    .cert-item:last-child { border-bottom: none; }
+    .cert-name { font-size: 0.78rem; color: var(--text); }
+    .cert-issuer { font-size: 0.65rem; color: var(--muted); margin-top: 0.1rem; }
+    .cert-date { font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
+
+    /* ── EDUCATION ─────────────────────────────────────────── */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .edu-degree {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-hi);
+    }
+    .edu-school { color: var(--accent); font-size: 0.78rem; margin: 0.25rem 0; }
+    .edu-detail { font-size: 0.74rem; color: var(--text); margin-top: 0.5rem; line-height: 1.8; }
+
+    /* ── SCROLLBAR ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .site-wrapper { grid-template-columns: 1fr; }
+      .sidebar { position: relative; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+      main { padding: 2rem 1.25rem; }
+      #about .hero-name { font-size: 2.2rem; }
+    }
+  </style>
 </head>
 <body>
-<img src="https://avatars.githubusercontent.com/rpd-512" class="prof"><br>
-<span class="prof" style="margin-top:10px;display:inline;">I am Rhiddhi Prasad Das</span><br>
-<hr>
-<span class="prof" style="font-size:25px;">Student, Programmer, Pianist</span>
-<span class="header" style="margin-top:10px;">Projects</span>
-<div class="proj"><a href="http://1nvict.000webhostapp.com/heybro/" target="_blank"><img src="http://1nvict.000webhostapp.com/heybro/images/favicon.png"></a><span class="titl">HeyBro</span><span>HeyBro is a web based chat application<br> created in PHP and JQuery.</span><br><a href="https://github.com/rpd-512/heyBro" target="_blank">Source code</a></div>
-<div class="proj"><a href="http://1nvict.000webhostapp.com/backjack/" target="_blank"><img src="http://1nvict.000webhostapp.com/backjack/images/favicon.png"></a><span class="titl">BackJack</span><span>BackJack is web based application that lets you control your linux based <br>devices from all over the internet. It was made in PHP, JQuery and Python.</span><br><a href="https://github.com/rpd-512/backJack" target="_blank">Source code</a></div>
-<div class="proj"><a href="https://github.com/rpd-512/urlDragon" target="_blank"><img src="https://raw.githubusercontent.com/rpd-512/urlDragon/main/images/favicon.png"></a><span class="titl">urlDragon</span><span>urlDragon is a basic url shortner program created in PHP.</span><br><a href="https://github.com/rpd-512/urlDragon" target="_blank">Source code</a></div>
-<div class="proj"><a href="http://rpd512.000webhostapp.com/askLantic/" target="_blank"><img src="http://rpd512.000webhostapp.com/askLantic/images/favicon.png"></a><span class="titl">AskLantic</span><span>AskLantic is a basic forum website built in PHP. Its kinda a rip off version of stackoverflow</span><br><a href="https://github.com/rpd-512/askLantic" target="_blank">Source code</a></div>
-<div class="proj"><a href="https://rpd-512.github.io/flappyBird01/index.html" target="_blank"><img src="https://raw.githubusercontent.com/rpd-512/rpd-512.github.io/main/flappyBird01/favicon.png"></a><span class="titl">flappyBird01</span><span>It was my first every browser game created in javascript.</span><br><a href="https://github.com/rpd-512/JsGames/tree/main/flappyBird01" target="_blank">Source code</a></div>
-<div class="proj"><a href="https://rpd-512.github.io/superNova/index.html" target="_blank"><img src="https://raw.githubusercontent.com/rpd-512/rpd-512.github.io/main/superNova/images/favicon.png"></a><span class="titl">SuperNova</span><span>It is a space shooter game created in javascript</span><br><a href="https://github.com/rpd-512/JsGames/tree/main/superNova" target="_blank">Source code</a></div>
 
-  <span style="font-family:acme;font-size:20px;">...and many more, check out my github page (Link below) for more projects.</span>
-<span style="position:fixed;color:white;bottom:5px;left:10px;" id="cprt"></span>
-<div class="cont">
-<div>
-<a href="https://twitter.com/rhiddhid" target="_blank"><img src="https://abs.twimg.com/responsive-web/client-web/icon-ios.b1fc7275.png"><span>Twitter</span></a>
-<a href="https://github.com/rpd-512" target="_blank"><img src="https://image.flaticon.com/icons/png/512/25/25231.png"><span>Github</span></a>
-<a href="https://fiverr.com/rpd_512" target="_blank"><img src="https://assetsv2.fiverrcdn.com/assets/v2_globals/apple-touch-icon-180x180-d5abd4cedbaf861091f2e039bfe10970.png"><span>Fiverr</span></a>
-<a href="mailto:rhiddhiprasad@gmail.com" target="_blank"><img src="https://p.kindpng.com/picc/s/10-100070_thumb-image-e-mail-symbol-for-resume-hd.png"><span>Mail</span></a>
+<div class="site-wrapper">
+
+  <!-- ═══ SIDEBAR ═══════════════════════════════════════════ -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">Rhiddhi Prasad Das</div>
+    <div class="sidebar-tagline">Researcher · Engineer</div>
+
+    <div class="nav-label">Navigation</div>
+    <nav>
+      <ul>
+        <li><a href="#about"       class="active"><span class="nav-icon">◈</span> About</a></li>
+        <li><a href="#experience"          ><span class="nav-icon">◈</span> Experience</a></li>
+        <li><a href="#publications"        ><span class="nav-icon">◈</span> Publications</a></li>
+        <li><a href="#projects"            ><span class="nav-icon">◈</span> Projects</a></li>
+        <li><a href="#skills"              ><span class="nav-icon">◈</span> Skills</a></li>
+        <li><a href="#education"           ><span class="nav-icon">◈</span> Education</a></li>
+        <li><a href="#certifications"      ><span class="nav-icon">◈</span> Certifications</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-links">
+      <a href="https://rpd-512.github.io" target="_blank">🌐 Website</a>
+      <a href="https://github.com/rpd-512" target="_blank">⌥ GitHub</a>
+      <a href="mailto:rhiddhiprasad@gmail.com">✉ Email</a>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN ═══════════════════════════════════════════════ -->
+  <main>
+
+    <!-- ── ABOUT ─────────────────────────────────────────── -->
+    <section id="about">
+      <div class="hero-name">Rhiddhi<br><span>Prasad Das</span></div>
+      <div class="hero-meta">
+        <span>📍 Bhubaneswar, India</span>
+        <span>🎓 KIIT University · CS&SE · Sem 6</span>
+        <span>📧 rhiddhiprasad@gmail.com</span>
+      </div>
+      <p class="hero-bio">
+        Undergraduate researcher at the intersection of combinatorial optimization, metaheuristics, hardware design, and biomedical instrumentation. I write papers, build tools, and explore the edges of computation — from ternary logic gates to robotic inverse kinematics.
+      </p>
+      <div class="stats-row">
+        <div class="stat-pill"><span class="num">6</span><span class="lbl">Publications</span></div>
+        <div class="stat-pill"><span class="num">8.6</span><span class="lbl">CGPA</span></div>
+        <div class="stat-pill"><span class="num">4</span><span class="lbl">Projects</span></div>
+        <div class="stat-pill"><span class="num">15+</span><span class="lbl">Certs</span></div>
+      </div>
+    </section>
+
+    <!-- ── EXPERIENCE ────────────────────────────────────── -->
+    <section id="experience">
+      <div class="section-header">
+        <span class="section-label">Experience</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="exp-card">
+          <div>
+            <div class="card-title">Short-Term Research Intern</div>
+            <div class="card-meta">Laboratory of Plasma Processing &amp; Biophysics · IIT Delhi</div>
+            <div class="card-desc">
+              Developed a microphone-coupled phonocardiogram probe for high-quality cardiac sound acquisition.
+              Worked under Prof. Marshal (Dept. of Physics) on signal capture and system-level design for biomedical instrumentation.
+            </div>
+          </div>
+          <div class="exp-date">Dec 2025 – Jan 2026</div>
+        </div>
+        <div class="card-footer">
+          <span class="tag tag-green">Biomedical</span>
+          <span class="tag tag-blue">Signal Processing</span>
+          <span class="tag tag-gray">IIT Delhi</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PUBLICATIONS ──────────────────────────────────── -->
+    <section id="publications">
+      <div class="section-header">
+        <span class="section-label">Publications</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">On Universality and Efficient Arithmetic Realisation of Ternary Logic Gates</div>
+        <div class="card-meta">Rhiddhi Prasad Das, Jyotiprakash Mishra</div>
+        <div class="card-desc">
+          Exhaustively evaluated all 19,683 binary-arity ternary gates; confirmed 3,774 are functionally complete. Proved unary completeness implies full completeness via Rosenberg's theorem (10,529× speedup). Classified gates into 322 isomorphism classes under S₃×Z₂ (47,105× speedup). Best ternary ripple-carry adder achieves 18% lower propagation depth and 9.4% fewer gates than binary NAND at 32-bit width.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">Preprint · Zenodo · Mar 2026</span>
+          <span class="tag tag-green">Ternary Logic</span>
+          <span class="tag tag-blue">Computer Architecture</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Inverse Design of Patch Antenna Geometry based on S11 using Nearest Refinement Algorithm</div>
+        <div class="card-meta">Rhiddhi Prasad Das, Vishwajeet Sharan</div>
+        <div class="card-desc">
+          Proposed NRA, an adaptive refinement-based inverse design method achieving up to 55% spectral MSE reduction while preserving physically valid antenna geometries.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">WAMS'26 (Accepted) · Jan 2026</span>
+          <span class="tag tag-green">Inverse Design</span>
+          <span class="tag tag-blue">Antenna</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wireless Sensor Network Optimization using Probabilistic Hop PSO</div>
+        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
+        <div class="card-desc">
+          Introduced PH-PSO, a probabilistic routing PSO achieving faster convergence, lower variance, and improved energy–latency trade-offs across 20–100 node networks over 100 trials.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">IEEE ICAUC'26 · Jan 2026</span>
+          <span class="tag tag-green">PSO</span>
+          <span class="tag tag-blue">WSN</span>
+          <span class="tag tag-gray">IEEE</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Solving Inverse Kinematics for Quantized Joint Manipulators Using Metaheuristics and Discrete Gradient Descent</div>
+        <div class="card-meta">Rhiddhi Prasad Das, Junali Jasmine Jena, Suresh Chandra Satapathy</div>
+        <div class="card-desc">
+          Formulated the Inverse Discrete Kinematics problem and proposed a two-stage metaheuristic + DGD solver achieving sub-millimetre accuracy and high stability across multiple robot models.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">IEEE INDICON'26 · Dec 2025</span>
+          <span class="tag tag-green">Robotics</span>
+          <span class="tag tag-blue">Metaheuristics</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Solving 0-1 Knapsack and Bin Packing using Logical Social Group Optimization</div>
+        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
+        <div class="card-desc">
+          Developed LSGO, a Boolean logic-driven SGO variant that improves solution quality, stability, and computational efficiency for combinatorial optimization problems.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">IEEE Access · May 2025</span>
+          <span class="tag tag-green">Combinatorial Opt.</span>
+          <span class="tag tag-gray">IEEE</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Hybrid Binary SGO-GA for Solving MAX-SAT</div>
+        <div class="card-meta">Rhiddhi Prasad Das et al.</div>
+        <div class="card-desc">
+          Proposed a hybrid SGO-GA framework combining exploration and exploitation to outperform conventional metaheuristics on NP-hard MAX-SAT instances.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">Procedia Computer Science · Nov 2024</span>
+          <span class="tag tag-green">MAX-SAT</span>
+          <span class="tag tag-blue">Hybrid Algorithms</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Reducing Bird Deaths from Electrocution using a Motion Sensor</div>
+        <div class="card-meta">Rhiddhi Prasad Das</div>
+        <div class="card-desc">
+          Designed a PIR sensor-based deterrent system using Arduino Nano to prevent bird electrocution, validated through field observations.
+        </div>
+        <div class="card-footer">
+          <span class="venue-badge published">IJSREM · Aug 2022</span>
+          <span class="tag tag-green">IoT</span>
+          <span class="tag tag-blue">Arduino</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ───────────────────────────────────────── -->
+    <section id="projects">
+      <div class="section-header">
+        <span class="section-label">Projects</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Py-Refinery</div>
+        <div class="card-meta">Custom library for a novel adaptive search algorithm</div>
+        <div class="card-desc">
+          Python/C++ library implementing the Nearest Refiner (NR) algorithm — a refinement-based local optimization method using numerical perturbation and gradient estimation. Built without external ML frameworks; showcases an alternative to end-to-end backpropagation.
+        </div>
+        <div class="card-footer">
+          <span class="tag tag-green">Python</span>
+          <span class="tag tag-blue">C++</span>
+          <span class="tag tag-gray">Optimization</span>
+          <a href="https://github.com/rpd-512/pyrefinery" target="_blank" class="link-sm">↗ github</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">ROUTE</div>
+        <div class="card-meta">Routing Optimization Using Tunable Evolution</div>
+        <div class="card-desc">
+          Lightweight, modular WSN simulation framework for evaluating routing strategies. Flexible TUI-based interface with visualization. Supports GA, PSO, and TLBO algorithm integration.
+        </div>
+        <div class="card-footer">
+          <span class="tag tag-green">C++</span>
+          <span class="tag tag-blue">Python</span>
+          <span class="tag tag-gray">WSN · ncurses</span>
+          <a href="https://github.com/rpd-512/ROUTE" target="_blank" class="link-sm">↗ github</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">FORGE</div>
+        <div class="card-meta">Formation of Optimized Robotic Ground-Truth Examples</div>
+        <div class="card-desc">
+          Data generation and simulation framework for large-scale inverse kinematics ground-truth datasets. Combines analytical forward kinematics with evolutionary optimization and collision detection. Designed for rapid NN prototyping in robotics.
+        </div>
+        <div class="card-footer">
+          <span class="tag tag-green">C++</span>
+          <span class="tag tag-blue">Eigen</span>
+          <span class="tag tag-gray">Robotics · Matplotlib</span>
+          <a href="https://github.com/rpd-512/FORGE" target="_blank" class="link-sm">↗ github</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Nand2Tetris</div>
+        <div class="card-meta">Building a modern computer from first principles</div>
+        <div class="card-desc">
+          End-to-end implementation: NAND gate → RAM → Assembler → VM → Compiler → OS → Games. Full stack in hardware description language, assembly, and custom toolchain.
+        </div>
+        <div class="card-footer">
+          <span class="tag tag-green">HDL</span>
+          <span class="tag tag-blue">Assembly</span>
+          <span class="tag tag-gray">Compiler Design</span>
+          <a href="https://github.com/rpd-512/nand2tetris" target="_blank" class="link-sm">↗ github</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ─────────────────────────────────────────── -->
+    <section id="skills">
+      <div class="section-header">
+        <span class="section-label">Skills &amp; Technologies</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-title">Languages</div>
+          <div class="skill-list">C++ · C · Python · Java<br>JavaScript · PHP · MySQL<br>Assembly · Arduino · Bash</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Algorithms</div>
+          <div class="skill-list">Swarm Intelligence · PSO<br>Genetic Algorithms · SGO<br>Metaheuristics · MAX-SAT</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Systems</div>
+          <div class="skill-list">Linux Admin · Automation<br>LAMP Architecture<br>Database Management</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Hardware / IoT</div>
+          <div class="skill-list">Arduino · Raspberry Pi<br>ARM Architecture<br>HDL · Digital Systems</div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-title">Research Areas</div>
+          <div class="skill-list">Combinatorial Opt.<br>Inverse Kinematics<br>Biomedical Instrumentation<br>Antenna Inverse Design</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── EDUCATION ──────────────────────────────────────── -->
+    <section id="education">
+      <div class="section-header">
+        <span class="section-label">Education</span>
+        <div class="section-line"></div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">B.Tech — Computer Science &amp; Systems Engineering</div>
+        <div class="edu-school">Kalinga Institute of Industrial Technology (KIIT) · Jul 2023 – May 2027</div>
+        <div class="edu-detail">
+          Current Semester: 6th &nbsp;·&nbsp; CGPA: 8.6<br>
+          Coursework: Compiler Design, ARM Architecture, Machine Learning, Computer Architecture, Linear Algebra, Data Structures, Differential Equations, Computer Networks, Algorithm Design
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CERTIFICATIONS ────────────────────────────────── -->
+    <section id="certifications">
+      <div class="section-header">
+        <span class="section-label">Certifications</span>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="card" style="padding: 0.5rem 1.5rem;">
+        <div class="cert-item">
+          <div><div class="cert-name">Build a Modern Computer from First Principles: Nand to Tetris</div><div class="cert-issuer">The Hebrew University of Jerusalem</div></div>
+          <div class="cert-date">May 2024</div>
+        </div>
+        <div class="cert-item">
+          <div><div class="cert-name">Introduction to Mathematical Thinking</div><div class="cert-issuer">Stanford Online</div></div>
+          <div class="cert-date">Dec 2023</div>
+        </div>
+        <div class="cert-item">
+          <div><div class="cert-name">Using Python to Access Web Data</div><div class="cert-issuer">University of Michigan</div></div>
+          <div class="cert-date">Jun 2020</div>
+        </div>
+        <div class="cert-item">
+          <div><div class="cert-name">Python for Data Science, AI &amp; Development</div><div class="cert-issuer">IBM</div></div>
+          <div class="cert-date">May 2020</div>
+        </div>
+        <div class="cert-item">
+          <div><div class="cert-name">The Arduino Platform and C Programming</div><div class="cert-issuer">University of California, Irvine</div></div>
+          <div class="cert-date">May 2020</div>
+        </div>
+        <div class="cert-item">
+          <div><div class="cert-name">C for Everyone: Programming Fundamentals</div><div class="cert-issuer">University of California, Santa Cruz</div></div>
+          <div class="cert-date">May 2020</div>
+        </div>
+        <div class="cert-item" style="border-bottom: none;">
+          <div><div class="cert-name" style="color: var(--muted);">+ 15 more certifications</div></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 </div>
-</div>
+
+<script>
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
 
 </body>
-<script>
-cprt.innerHTML = "&#169; Rhiddhi Prasad Das "+new Date().getFullYear();
-</script>
 </html>
